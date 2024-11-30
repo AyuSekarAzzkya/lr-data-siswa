@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DataSiswaController;
 use App\Http\Controllers\UserController;
@@ -29,4 +30,14 @@ Route::prefix('user')->name('user.')->group(function(){
     Route::get('/{id}/edit',[UserController::class, 'edit'])->name('edit');
     Route::put('/{id}',[UserController::class, 'update'])->name('update');
     Route::delete('/{id}',[UserController::class, 'destroy'])->name('destroy');
+});
+
+Route::get('/absensi', [AbsensiController::class, 'index'])->name('absensi.index');
+
+Route::prefix('absensi')->name('absensi.')->group(function(){
+    Route::get('/create', [AbsensiController::class, 'create'])->name('create');
+    Route::post('/store',[AbsensiController::class, 'store'])->name('store');
+    Route::get('/{id}/edit',[AbsensiController::class, 'edit'])->name('edit');
+    Route::put('/{id}',[AbsensiController::class, 'update'])->name('update');
+    Route::delete('/{id}',[AbsensiController::class, 'destroy'])->name('destroy');
 });

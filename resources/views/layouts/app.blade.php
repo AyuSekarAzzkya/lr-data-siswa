@@ -61,6 +61,11 @@
                             <i class="fas fa-user-cog"></i> Kelola Akun
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('absensi.index') }}">
+                            <i class="fas fa-book"></i> Absensi
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
