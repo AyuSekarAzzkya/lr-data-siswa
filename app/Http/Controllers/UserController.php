@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -105,6 +106,54 @@ class UserController extends Controller
         } else {
             return redirect()->back()->with('failed', 'Tidak menghapus data pengguna!');
         }
+    }
+
+    // public function loginauth(Request $request)
+    // {
+    //     // Validasi input
+    //     $request->validate([
+    //         'email' => 'required|email',
+    //         'password' => 'required'
+    //     ]);
+
+    //     $user = $request->only('email', 'password');
+
+    //     if (Auth::attempt($user)) {
+    //         return redirect()->route('dashboard');
+    //     } else {
+    //         return redirect()->back()->with('failed', 'Email atau password salah!');
+    //     }
+        
+    // }
+
+    public function loginauth(Request $request)
+{
+    // Cek jika pengguna sudah login
+    if (Auth::check()) {
+        return redirect()->route('dashboard'); // Arahkan langsung ke dashboard jika sudah login
+    }
+
+    // Validasi input
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
+
+    $user = $request->only('email', 'password');
+
+    // Coba login
+    if (Auth::attempt($user)) {
+        return redirect()->route('dashboard');
+    } else {
+        return redirect()->back()->with('failed', 'Email atau password salah!');
+    }
+}
+
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login')->with('logout', 'Anda Telah Logout!');
     }
 }
 
