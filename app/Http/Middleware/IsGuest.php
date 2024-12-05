@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class IsAdmin
+class IsGuest
 {
     /**
      * Handle an incoming request.
@@ -16,12 +16,12 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-         if (Auth::check() && Auth::user()->role == 'admin') {
-            //jika ada, diperbolehkan akses
+        if(Auth::check() == FALSE ){
+            //jika chek nya false atau belum login maka di perbolehkan akses
             return $next($request);
         }else{
-            //jika tidak ada dikembalikan ke halaman 404
-            return abort('404');
+            //jika true atau sudah login, balikin ke halaman homr
+            return redirect()->route('dashboard')->with('failed', 'Anda Sudah Login');
         }
     }
 }

@@ -16,7 +16,7 @@ class IsUser
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::check('user')){
+        if (Auth::check() && Auth::user()->role == 'user') {
             //jika ada, diperbolehkan akses
             return $next($request);
         }else{
